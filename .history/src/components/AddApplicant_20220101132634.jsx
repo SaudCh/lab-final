@@ -1,11 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
-const EditApplicant = () => {
-  const { sName, rNumber, sid } = useParams();
-  const [studentName, setStudentName] = useState(sName);
-  const [registrationNumber, setRegistrationNumber] = useState(rNumber);
-  const [message, setMessage] = useState("");
+const AddApplicant = () => {
+  const [studentName, setStudentName] = useState("");
+  const [registrationNumber, setRegistrationNumber] = useState("");
+  const [message, setMessage] = useState();
 
   const addDetails = async (e) => {
     e.preventDefault();
@@ -13,22 +11,21 @@ const EditApplicant = () => {
     const data = {
       studentName: studentName,
       registrationNumber: registrationNumber,
-      sid: sid,
     };
-
     await axios
-      .patch("http://localhost:5000/user/update", data)
+      .post("http://localhost:5000/user/add", data)
       .then((response) => {
         console.log(response.data);
         setMessage(response.data.message);
       })
       .catch((e) => console.log(e));
+    setStudentName("");
+    setRegistrationNumber("");
   };
 
   return (
     <div className="col-md-6 position-absolute start-50 translate-middle-x mt-5">
       {message && <div className="alert alert-success">{message}</div>}
-
       <form>
         <label className="mb-2">Student Name</label>
         <input
@@ -43,10 +40,11 @@ const EditApplicant = () => {
         <input
           type="text"
           className="form-control mb-3"
-          name="registrationNumber"
           value={registrationNumber}
+          name="registrationNumber"
           onChange={(e) => setRegistrationNumber(e.target.value)}
         />
+        <label className="mb-2">Hostel Prefrences</label>
 
         <button
           className="btn btn-primary form-control"
@@ -59,4 +57,4 @@ const EditApplicant = () => {
   );
 };
 
-export default EditApplicant;
+export default AddApplicant;
