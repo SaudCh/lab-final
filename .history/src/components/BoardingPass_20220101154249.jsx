@@ -28,7 +28,7 @@ export default function BoardingPass() {
           <div class="row g-0">
             <div class="col-md-6 text-center">
               <img
-                src={`http://localhost:5000/${ApplicantData.image}`}
+                src={`https://hostel-management-back.herokuapp.com/${ApplicantData.image}`}
                 class="img-fluid rounded-start"
                 alt="..."
                 style={{ width: 150 }}
